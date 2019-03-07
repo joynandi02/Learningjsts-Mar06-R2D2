@@ -70,6 +70,70 @@ describe('variables and constants', () => {
                 friends[1] = 'Stacey';
                 friends[2] = 42;
             });
+            describe('tuples', () => {
+                it('the syntax first', () => {
+                    let warren: [string, string, number];
+                    warren = ['Warren', 'Ellis', 56];
+
+                    //let first = warren[0];
+                    //let age = warren[2];
+
+                    let [first, , age] = warren;
+                    expect(first).toBe('Warren');
+                    expect(age).toBe(56);
+                });
+                it('should behave...', () => {
+                    function formatName(first: string, last: string): [string, number] {
+                        const fullName = `${last},${first}`;
+                        return [fullName, fullName.length];
+                    }
+                    const [name, len] = formatName('Han', 'Solo');
+                    expect(name).toBe('Solo,Han');
+                    expect(len).toBe(8);
+                });
+                it('using destructuring on an array', () => {
+                    const friends = ['Reggie', 'Susan', 'Neil'];
+                    const [first, last] = friends;
+                    expect(first).toBe('Reggie');
+
+                    const [firstFriend, ...restOfMyFriends] = friends;
+                    expect(firstFriend).toBe('Reggie');
+                    expect(restOfMyFriends).toEqual(['Susan', 'Neil']);
+                });
+                it('using the spread operator', () => {
+                    const friends = ['Susan', 'Neil'];
+                    const newFriends = ['Reggie', ...friends];
+                    expect(newFriends).toEqual(['Reggie', 'Susan', 'Neil']);
+                });
+                describe('objects and destructuring of objects', () => {
+                    describe('object leteral', () => {
+                        interface Movie { title: string, director: string };
+                        const movie: Movie = {
+                            title: "The Last Jedi",
+                            director: "Rian Johnson"
+                        }
+                        const movie2: Movie = {
+                            title: "Thor Ragnarok",
+                            director: "Taika Waititi"
+                        }
+                    });
+                    it('duck typing', () => {
+                        interface PhoneCall { message: string }
+                        function doIt(thing: PhoneCall) {
+                            console.log(thing.message);
+                        }
+                        doIt({ message: 'Call your mom' });
+
+                        const phoneCall = {
+                            from: 'Jenny',
+                            when: 'noon',
+                            callbackNumber: '867-5309',
+                            message: 'Pay me!'
+                        }
+                        doIt(phoneCall);
+                    });
+                });
+            });
         });
     });
 });
